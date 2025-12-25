@@ -1,0 +1,166 @@
+Результаты лексического анализа:
+Строка | Позиция | Тип | Лексема
+---------------------------------
+1 | 1 | PROCEDURE | procedure
+1 | 11 | ID | TestCorrect
+1 | 22 | SEMICOLON | ;
+2 | 2 | VAR | var
+3 | 5 | ID | y
+3 | 6 | COMMA | ,
+3 | 8 | ID | x
+3 | 9 | COMMA | ,
+3 | 11 | ID | z
+3 | 12 | COLON | :
+3 | 14 | INTEGER | integer
+3 | 21 | SEMICOLON | ;
+4 | 5 | ID | a
+4 | 6 | COLON | :
+4 | 8 | INTEGER | integer
+4 | 15 | SEMICOLON | ;
+5 | 2 | BEGIN | begin
+6 | 6 | ID | x
+6 | 8 | ASSIGN | :=
+6 | 11 | CONST | 10
+6 | 13 | SEMICOLON | ;
+7 | 6 | ID | a
+7 | 8 | ASSIGN | :=
+7 | 11 | CONST | 20
+7 | 14 | PLUS | +
+7 | 16 | LPAREN | (
+7 | 17 | ID | x
+7 | 19 | MINUS | -
+7 | 21 | ID | a
+7 | 22 | RPAREN | )
+7 | 23 | SEMICOLON | ;
+8 | 6 | IF | if
+8 | 9 | ID | x
+8 | 11 | EQUAL | =
+8 | 13 | ID | y
+8 | 15 | THEN | then
+9 | 10 | ID | z
+9 | 12 | ASSIGN | :=
+9 | 15 | ID | x
+9 | 16 | SEMICOLON | ;
+10 | 6 | ELSE | else
+11 | 10 | ID | z
+11 | 12 | ASSIGN | :=
+11 | 15 | ID | y
+11 | 16 | SEMICOLON | ;
+12 | 2 | END | end
+
+Хеш-таблица:
+Тип лексемы | Лексема | Индекс в хеш-таблице
+--------------------------------------------
+3 | var | 3
+8 | x | 6
+8 | y | 4
+8 | z | 7
+20 | ( | 16
+21 | ) | 18
+6 | then | 21
+11 | + | 15
+19 | , | 5
+12 | - | 17
+7 | else | 22
+8 | TestCorrect | 1
+5 | if | 19
+18 | : | 8
+17 | ; | 2
+10 | := | 12
+13 | = | 20
+9 | 10 | 13
+4 | integer | 9
+2 | end | 23
+0 | procedure | 0
+8 | a | 10
+1 | begin | 11
+9 | 20 | 14
+СИНТАКСИЧЕСКИЙ АНАЛИЗ
+
+ДЕРЕВО РАЗБОРА:
+------------------------------
+Procedure
+  Begin
+    keyword [procedure]
+    ProcedureName [TestCorrect]
+    semicolon [;]
+  Descriptions
+    keyword [var]
+    DescrList
+      Descr
+        VarList
+          id [y]
+          comma [,]
+          id [x]
+          comma [,]
+          id [z]
+        colon [:]
+        Type [integer]
+        semicolon [;]
+      Descr
+        VarList
+          id [a]
+        colon [:]
+        Type [integer]
+        semicolon [;]
+  keyword [begin]
+  Operators
+    Assignment
+      id [x]
+      assign [:=]
+      Expr
+        SimpleExpr
+          const [10]
+    Assignment
+      id [a]
+      assign [:=]
+      Expr
+        SimpleExpr
+          const [20]
+        operator [+]
+        Expr
+          SimpleExpr
+            lparen [(]
+            Expr
+              SimpleExpr
+                id [x]
+              operator [-]
+              Expr
+                SimpleExpr
+                  id [a]
+            rparen [)]
+    IfStatement
+      keyword [if]
+      Condition
+        Expr
+          SimpleExpr
+            id [x]
+        RelationOperator [=]
+        Expr
+          SimpleExpr
+            id [y]
+      keyword [then]
+      Assignment
+        id [z]
+        assign [:=]
+        Expr
+          SimpleExpr
+            id [x]
+      keyword [else]
+      Assignment
+        id [z]
+        assign [:=]
+        Expr
+          SimpleExpr
+            id [y]
+  End [end]
+------------------------------
+
+РЕЗУЛЬТАТ: Синтаксических ошибок не обнаружено
+
+ПОСТФИКСНАЯ ЗАПИСЬ:
+----------------------------------------
+10 x := ; 20 x a - + a := ; x y = L1 JZ x z := ; L2 JMP L1: y z := ; L2: 
+----------------------------------------
+
+РЕЗУЛЬТАТ: Семантических ошибок не обнаружено

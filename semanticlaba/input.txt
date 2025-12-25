@@ -1,0 +1,12 @@
+procedure TestCorrect;
+var
+   y, x, z: integer;
+   a: integer;
+begin
+    x := 10;
+    a := 20 + (x - a);
+    if x = y then
+        z := x;
+    else
+        z := y;
+end
