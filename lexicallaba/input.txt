@@ -1,0 +1,25 @@
+procedure CheckNumbers;
+var
+    a, b, c: integer;
+    integera h5 01 @ # $
+begin
+    a := 8;
+    b := 12;
+    c := 5;
+    = <
+    
+    if a > b then
+        if a > c then
+            a := 0
+        else
+            c := 0
+    else
+        if b > c then
+            b := 0
+        else
+            c := 0;
+    
+    if a = 0 then
+        if b = 0 then
+            c := 100;
+end
